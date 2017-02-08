@@ -41,8 +41,9 @@ def index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
-        results = analyze_text(text)
-    return render_template("main_page.html", errors=errors)
+        #results = analyze_text(text)
+        (results, results2, verbs) = analyze_text(text)
+    return render_template("main_page.html", errors=errors, results=results, results2=results2, verbs=verbs)
 
 @app.route('/index', methods=['GET', 'POST'])
 def new_index():
