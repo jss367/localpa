@@ -38,7 +38,7 @@ def analyze_text2(text):
     results2.append(('Average word size', ave_word))
     results2.append(('Number of words', total_word_count))
     results2.append(('Number of sentences', num_sent))
-    num_sent = 3#Right now we're assuming it's three sentences cuase it's late
+    #num_sent = 3#Right now we're assuming it's three sentences cuase it's late
     results2.append(('Ave words per sentence', total_word_count/num_sent))
     verbs=tuple(ranked_verbs)
     #verbs.append(ranked_verbs)
