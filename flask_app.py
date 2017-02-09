@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request#, url_for
+from flask import Flask, redirect, jsonify, render_template, request#, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from text_analysis import analyze_text
 from text_analysis2 import analyze_text2
@@ -65,3 +65,11 @@ def new_index():
 @app.route('/post')
 def post():
     return render_template('post.html')
+
+
+
+@app.route('/_add_numbers')
+def add_numbers():
+    a = request.args.get('a', 0, type=int)
+    b = request.args.get('b', 0, type=int)
+    return jsonify(result=a + b)
