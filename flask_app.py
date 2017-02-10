@@ -2,6 +2,7 @@ from flask import Flask, redirect, jsonify, render_template, request#, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from text_analysis import analyze_text
 from text_analysis2 import analyze_text2
+import sys
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -51,6 +52,7 @@ def new_index():
     results = {}
     results2 = {}
     verbs = {}
+    text = "The text is not being found"
     if request.method == "POST":
         try:
             text = request.form['contents']
@@ -62,14 +64,53 @@ def new_index():
     return render_template('index.html', errors=errors, results=results, results2=results2, verbs=verbs)
 
 
-@app.route('/post')
+@app.route('/post', methods=['GET', 'POST'])
 def post():
+    if request.method == "POST":
+        return("Jel")
     return render_template('post.html')
 
 
 
-@app.route('/_add_numbers')
+@app.route('/return_text')
 def add_numbers():
     a = request.args.get('a', 0, type=int)
     b = request.args.get('b', 0, type=int)
-    return jsonify(result=a + b)
+    contents = request.args.get('contents', 'notext')
+    #return jsonify(result=contents)
+    (results, results2, verbs) = analyze_text2(contents)
+    #return jsonify({'results': results, 'results2': results2, 'verbs': verbs})
+    return render_template('index.html', errors=errors, results=results, results2=results2, verbs=verbs)
+
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    print('You made it to analyze', file=sys.stderr)
+    errors = []
+    results = {}
+    results2 = {}
+    verbs = {}
+    #content = request.get_json(silent=True)
+    #content2 = request.json
+    #content3 = request.get_json()
+    content4 = request.form.get('html', '')
+    #content5 = request.form['contents']
+    #print(content, file=sys.stderr) #These all return "None"
+    #print(content2, file=sys.stderr) #Trying to make them return user text
+    #print(content3, file=sys.stderr)
+    print(content4, file=sys.stderr)
+    #print(content5, file=sys.stderr)
+    #if request.method == "POST":
+    html = request.form.get('html', '')
+    print(html, file=sys.stderr)
+    text = "The text is not being found"
+    print('Hello world!', file=sys.stderr)
+    try:
+        text = request.form['contents']
+    except:
+        errors.append(
+            "Unable to get URL. Please make sure it's valid and try again."
+        )
+    (results, results2, verbs) = analyze_text2(content4)
+    print(text, file=sys.stderr)
+    print(results, file=sys.stderr)
+    return jsonify({'results': results, 'results2': results2, 'verbs': verbs})

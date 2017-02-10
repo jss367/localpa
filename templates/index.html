@@ -6,26 +6,16 @@
 
   <div class="row">
     <form role="form" method='POST' action='#'>
-      <textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
-      <button type="submit" class="btn btn-default">Test</button>
+      <textarea class="form-control" id="user-text" name="contents" placeholder="Enter a comment"></textarea>
+      <button type="button" id="analyze-button" class="btn btn-default">Not Working Button</button>
+      <button type="submit" id="analyze-button2" class="btn btn-default">Working Button</button>
     </form>
   </div>
-
-
-Field1: <input type="text" id="field1" value="Hello World!"><br>
-Field3:     <form role="form" method='POST' action='#'>
-      <textarea class="form-control" id="field3" name="contents" placeholder="Enter a comment"></textarea>
-      <button type="button" class="btn btn-default">button test</button>
-    </form>
-
-<!-- <button onclick="myFunction()">Copy Text</button> -->
-
-<p>A function is triggered when the button is clicked. The function copies the text from Field1 into Field2.</p>
 
 <script src="/static/js/index.js"></script>
 
 
-<h1>jQuery Example</h1>
+<h2>jQuery Example</h2>
 <p><input type=text size=5 name=a> +
    <input type=text size=5 name=b> =
    <span id=result>?</span>
