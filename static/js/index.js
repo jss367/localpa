@@ -21,7 +21,7 @@ $(document).ready(function(){
             success: function (ret) {
             	//alert('JSON posted: ' + JSON.stringify(ret));
             	results = ret.results
-            	results2 = ret.results2
+            	console.log(results)
             	verbs = ret.verbs
             	console.log(verbs)
             	displayText();
@@ -33,6 +33,9 @@ $(document).ready(function(){
 	});
 
 function displayText() {
-	$("#character-count").text(results.toString());
+	$("#num-words").text(results['num_words']);
+	$("#ave-words").text(results['Ave word size']);
+	
+	//$("#num-words").text(results['num_words']toString());
 
 }
