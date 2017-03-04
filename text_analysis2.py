@@ -2,7 +2,7 @@ import re
 import nltk
 import os
 from collections import Counter
-#from bs4 import BeautifulSoup
+import pandas as pd
 
 
 # pre-load and pre-compile required variables and methods
@@ -43,7 +43,13 @@ def analyze_text2(text):
     results['Ave word size'] = ave_word
     ease, grade = flesch_kincaid(text, sentences=num_sent, tokens=tokens, words=total_word_count) #syllables is not sent
     results['Flesch Kincaid'] = grade
-    verbs = tuple(ranked_verbs)
+
+
+    (nouns, verbs, adjectives, pronouns, adverbs, proper_nouns, conjunctions, prepositions, interjections, modals,
+            tagged_others, other) = parts_of_speech(tokens)
+
+    results['Light verbs'] = light_verbs(verbs)
+    #verbs = tuple(ranked_verbs)
     # verbs.append(ranked_verbs)
     return (results, verbs)
 
@@ -264,3 +270,72 @@ def flesch_kincaid(text, sentences=None, tokens=None, words=None, syllables=None
     ease = 206.835-1.015*(words/sentences) - 84.6*(syllables/words)
     grade = 0.39*(words/sentences) + 11.8*(syllables/words) - 15.59
     return round(ease, 2), round(grade, 1)
+
+
+def parts_of_speech(tokens):
+    # Note that IN can be either a preposition or a conjunction, for now we're going to list it with the prepositions
+    noun_pos = ['NN', 'NNS']
+    nouns = []
+    verb_pos = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
+    verbs=[]
+    adjective_pos = ['JJ', 'JJR', 'JJS']
+    adjectives = []
+    pronoun_pos = ['PRP', 'PRP$', 'WP', 'WP$']
+    pronouns = []
+    adverb_pos = ['RB', 'RBR', 'RBS', 'WRB']
+    adverbs = []
+    proper_noun_pos = ['NNP', 'NNPS']
+    proper_nouns = []
+    conjunction_pos = ['CC']
+    conjunctions = []
+    preposition_pos = ['IN', 'TO']
+    prepositions = []
+    interjection_pos = ['UH']
+    interjections = []
+    modal_pos = ['MD'] # But these are also verbs, so let's make sure they show up as such
+    modals = []
+    tagged_other_pos = ['CD', 'DT', 'EX', 'FW', 'LS', 'PDT', 'POS', 'RP', 'SYM', 'WDT']
+    tagged_others = []
+    other = []
+    
+    tagged = nltk.pos_tag(tokens)
+    
+    for idx, token in enumerate(tagged):
+        if token[1] in noun_pos:
+            nouns.append(token[0])
+        elif token[1] in verb_pos:
+            verbs.append(token[0])
+        elif token[1] in adjective_pos:
+            adjectives.append(token[0])
+        elif token[1] in pronoun_pos:
+            pronouns.append(token[0])
+        elif token[1] in adverb_pos:
+            adverbs.append(token[0])
+        elif token[1] in proper_noun_pos:
+            proper_nouns.append(token[0])
+        elif token[1] in conjunction_pos:
+            conjunctions.append(token[0])
+        elif token[1] in preposition_pos:
+            prepositions.append(token[0])
+        elif token[1] in interjection_pos:
+            interjections.append(token[0])
+        elif token[1] in modal_pos:
+            modals.append(token[0])
+        elif token[1] in tagged_other_pos:
+            tagged_others.append(token[0])
+        else:
+            other.append(token[0])
+    
+    return (nouns, verbs, adjectives, pronouns, adverbs, proper_nouns, conjunctions, prepositions, interjections, modals,
+            tagged_others, other)
+
+
+def light_verbs(verbs):
+    '''The light verbs list is stemmed, so we'll have to stem the verbs as well to compare.
+    This way we don't have to check every variation of a word'''
+    stemmer = nltk.stem.snowball.SnowballStemmer("english")
+    verb_stems = [stemmer.stem(verb) for verb in verbs]
+    df = pd.read_csv(os.getcwd() + '\corpora/light_verbs', header=None)
+    df.columns = ['light']
+    light_verbs = [verb for verb in verb_stems if verb in list(df['light'])]
+    return light_verbs

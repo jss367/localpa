@@ -94,7 +94,7 @@ def analyze():
             "Unable to get URL. Please make sure it's valid and try again."
         )
     #Change this in between index and main page
-    (results, verbs) = analyze_text(mycontent)
+    (results, verbs) = analyze_text2(mycontent)
     #Change this in between index and main page
     print(results, file=sys.stderr)
     return jsonify({'results': results, 'verbs': verbs})
