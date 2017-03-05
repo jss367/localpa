@@ -15,6 +15,9 @@
     <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='jquery.js') }}">\x3C/script>')
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
+            <!-- highlight-within-textarea CSS/JS -->
+    <link href="/static/css/jquery.highlight-within-textarea.css" rel="stylesheet">
+    <script src="/static/js/jquery.highlight-within-textarea.js"></script>
     {% block javascript %}{% endblock %}
 </head>
 
