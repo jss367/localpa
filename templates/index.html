@@ -47,13 +47,8 @@
     </form>
   </div>
 
-<p>The &lt;mark&gt; element is used to
-  <mark>highlight</mark> text</p>
 
-<!--     <link href="/static/css/jquery.highlight-within-textarea.css" rel="stylesheet">
-    <script src="/static/js/jquery.highlight-within-textarea.js"></script>
 
- -->
 
 <style>
       @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Mono);
@@ -118,8 +113,6 @@
 
 
 
-<p><a href="https://github.com/lonekorean/highlight-within-textarea/tree/master">Go to GitHub repo</a></p>
-
     <h1>Highlight Within Textarea</h1>
 
 
@@ -135,6 +128,26 @@ function onInputRegex(input) {
 $('textarea.regex-example').highlightWithinTextarea(onInputRegex);
       </script>
     </section>
+
+
+
+
+
+
+    <section>
+      <h2>This is my test section</h2>
+      <p>A common use test sections is to make stuff up.</p>
+      <textarea class="test-example">There are about 5,000 sections worldwide. Three thousand of them are found in the Andes alone, mainly in Peru, Bolivia, Ecuador, Chile, and Colombia.</textarea>
+   <script src="/static/js/index.js"></script>
+    </section>
+
+
+
+
+
+
+
+
 
     <section>
       <h2>Using Regex Again</h2>
@@ -154,14 +167,7 @@ $('textarea.regex-again-example').highlightWithinTextarea(onInputRegexAgain);
       <p>The onInput callback can also return an array of arrays to specify highlights by character position. Each inner array has 2 values: a starting index (inclusive) and an ending index (exclusive). This example highlights the first 10 characters and the last 10 characters, as long as there are enough characters to do so.</p>
       <textarea class="array-example">Bears are mammals of the family Ursidae.</textarea>
       <script>
-function onInputArray(input) {
-  var length = input.length;
-  if (length >= 20) {
-    return [[0, 10], [length - 10, length]];
-  } else {
-    return [];
-  }
-}
+
 
 $('textarea.array-example').highlightWithinTextarea(onInputArray);
       </script>

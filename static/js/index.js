@@ -29,6 +29,12 @@ $(document).ready(function(){
         });
 	})
 
+$('textarea.test-example').highlightWithinTextarea(onTest);
+function onTest(input) {
+	console.log("We have reached the onTest function")
+	// console.log(words)
+  return /chile|ecuador|peru/gi;
+}
 
 	});
 
@@ -40,4 +46,15 @@ function displayText() {
 	
 	//$("#num-words").text(results['num_words']toString());
 
+}
+
+
+
+function onInputArray(input) {
+  var length = input.length;
+  if (length >= 20) {
+    return [[0, 10], [length - 10, length]];
+  } else {
+    return [];
+  }
 }
