@@ -36,8 +36,13 @@ function displayText() {
 	$("#num-words").text(results['num_words']);
 	$("#ave-words").text(results['Ave word size']);
 	$("#fk-score").text(results['Flesch Kincaid']);
-
-	
+	var aa = JSON.stringify(results['Light verbs'])
+	if (aa){
+		console.log('Vern verbs detected')
+		$("#light-verbs").text(aa)
+	}
+	console.log(typeof results['Light verbs'])
+	console.log(typeof aa)
 	//$("#num-words").text(results['num_words']toString());
 
 }
